@@ -121,15 +121,13 @@ module.exports = class Driver extends EventEmitter {
 		const id = this.getDeviceId(device);
 		device = this.getDevice(id);
 		if (device) {
-			if (this.state.has(id)) {
-				this.emit('new_state', device, state, this.state.get(id));
-			}
+			this.emit('new_state', device, state, this.state.get(id) || {});
 			this.state.set(id, state);
 			Homey.manager('settings').set(`${this.config.name}:${id}:state`, state);
 		}
 		if (this.pairingDevice && this.pairingDevice.data.id === id) {
 			if (this.state.has('_pairingDevice')) {
-				this.emit('new_state', this.pairingDevice.data, state, this.state.get('_pairingDevice'));
+				this.emit('new_state', this.pairingDevice.data, state, this.state.get('_pairingDevice') || {});
 			}
 			this.state.set('_pairingDevice', state);
 		}
@@ -410,12 +408,20 @@ module.exports = class Driver extends EventEmitter {
 		return bitArray.join('');
 	}
 
+	bitArrayToNumber(inputBitArray) {
+		const bitArray = inputBitArray.slice(0).map(Number);
+		if (bitArray.find(nr => nr !== 0 && nr !== 1)) {
+			this.emit('error', `[Error] Bitarray (${inputBitArray}) contains non-binary values`);
+		}
+		return parseInt(bitArray.join(''), 2);
+	}
+
 	numberToBitArray(inputNumber, length) {
 		const number = Number(inputNumber);
 		if (isNaN(number) || number % 1 !== 0) {
 			this.emit('error', `[Error] inputNumber (${inputNumber}) is a non-integer value`);
 		}
-		return '0'.repeat(length).concat(number.toString(2)).substr(length * -1);
+		return '0'.repeat(length).concat(number.toString(2)).substr(length * -1).split('').map(Number);
 	}
 
 	getSettings(device) {
@@ -442,10 +448,16 @@ module.exports = class Driver extends EventEmitter {
 	}
 
 	updateSettings(device, settings, oldSettings, changedKeys, callback) {
-		const id = this.getDeviceId(device);
-		this.settings.set(id, Object.assign(this.settings.get(id) || {}, settings));
-		if (callback) {
-			callback(null, true);
+		if (!settings) {
+			if (callback) {
+				callback(new Error(__('433_generator.error.emptySettings')));
+			}
+		} else {
+			const id = this.getDeviceId(device);
+			this.settings.set(id, Object.assign({}, this.settings.get(id) || {}, settings || {}));
+			if (callback) {
+				callback(null, true);
+			}
 		}
 	}
 

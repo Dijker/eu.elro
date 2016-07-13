@@ -106,7 +106,8 @@
 		},
 		"error": {
 			"device_exists": "This device is already paired with Homey.\u0000",
-			"no_device": "No device set to pair. Please close the pairing wizard and try again.\u0000"
+			"no_device": "No device set to pair. Please close the pairing wizard and try again.\u0000",
+			"no_settings": "No settings object. Please try again.\u0000"
 		}
 	},
 	"devices": {

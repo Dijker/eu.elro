@@ -1,7 +1,6 @@
 'use strict';
 
 const DefaultDriver = require('../../../drivers/lib/driver');
-const SignalManager = Homey.wireless('433').Signal;
 
 module.exports = class Elro extends DefaultDriver {
 	constructor(config) {
@@ -24,8 +23,8 @@ module.exports = class Elro extends DefaultDriver {
 	payloadToData(payload) { // Convert received data to usable variables
 		if (payload.length === 12 && payload[10] !== payload[11]) {
 			const data = {
-				address: SignalManager.bitArrayToString(payload.slice(0, 5)),
-				unit: SignalManager.bitArrayToString(payload.slice(5, 10)),
+				address: this.bitArrayToString(payload.slice(0, 5)),
+				unit: this.bitArrayToString(payload.slice(5, 10)),
 				state: payload[10],
 			};
 			data.id = `${data.address}:${data.unit}`;
@@ -41,8 +40,8 @@ module.exports = class Elro extends DefaultDriver {
 			data.unit && data.unit.length === 5 &&
 			typeof data.state !== 'undefined'
 		) {
-			const address = SignalManager.bitStringToBitArray(data.address);
-			const unit = SignalManager.bitStringToBitArray(data.unit);
+			const address = this.bitStringToBitArray(data.address);
+			const unit = this.bitStringToBitArray(data.unit);
 			return address.concat(unit, Number(data.state), Number(data.state) ? 0 : 1);
 		}
 		return null;
