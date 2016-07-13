@@ -178,8 +178,8 @@ const config = {
 		}]
 	},
 	images: {
-		small: '../../433_generator/assets/AB440R/images/small.jpg',
-		large: '../../433_generator/assets/AB440R/images/large.jpg'
+		small: '../../433_generator/assets/AB440SC/images/small.jpg',
+		large: '../../433_generator/assets/AB440SC/images/large.jpg'
 	},
 	id: 'AB440SC',
 	class: 'socket',
