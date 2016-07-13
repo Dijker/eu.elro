@@ -1,0 +1,280 @@
+{
+  "id": "nl.elro",
+  "version": "2.0.0",
+  "compatibility": ">=0.8.30",
+  "category": [
+    "appliances",
+    "lights"
+  ],
+  "name": {
+    "en": "Elro",
+    "nl": "Elro"
+  },
+  "description": {
+    "en": "Give Homey the ability to control your Elro devices",
+    "nl": "Laat Homey Elro apparaten aansturen"
+  },
+  "author": {
+    "name": "Athom B.V."
+  },
+  "images": {
+    "large": "./assets/images/large.png",
+    "small": "./assets/images/small.png"
+  },
+  "permissions": [
+    "homey:wireless:433"
+  ],
+  "drivers": [
+    {
+      "id": "AB440R",
+      "name": {
+        "en": "AB440R"
+      },
+      "class": "other",
+      "capabilities": [],
+      "images": {
+        "small": "./433_generator/assets/AB440R/images/small.jpg",
+        "large": "./433_generator/assets/AB440R/images/large.jpg"
+      },
+      "pair": [
+        {
+          "id": "generic_imitate",
+          "navigation": {}
+        },
+        {
+          "id": "generic_test_remote",
+          "navigation": {
+            "prev": "generic_imitate",
+            "next": "generic_done"
+          }
+        },
+        {
+          "id": "generic_done",
+          "navigation": {}
+        }
+      ]
+    },
+    {
+      "id": "AB440WD",
+      "name": {
+        "en": "AB440WD"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "small": "./433_generator/assets/AB440R/images/small.jpg",
+        "large": "./433_generator/assets/AB440R/images/large.jpg"
+      },
+      "pair": [
+        {
+          "id": "generic_choice",
+          "navigation": {}
+        },
+        {
+          "id": "generic_imitate",
+          "navigation": {
+            "prev": "generic_choice"
+          }
+        },
+        {
+          "id": "generic_test_switch_2",
+          "navigation": {
+            "prev": "generic_imitate",
+            "next": "generic_choose_slave_2"
+          }
+        },
+        {
+          "id": "generic_choose_slave_2",
+          "navigation": {
+            "prev": "generic_test_switch_2",
+            "next": "generic_done"
+          },
+          "template": "choose_slave"
+        },
+        {
+          "id": "generic_info",
+          "navigation": {
+            "prev": "generic_choice",
+            "next": "generic_dipswitch"
+          }
+        },
+        {
+          "id": "generic_dipswitch",
+          "navigation": {
+            "prev": "generic_info",
+            "next": "generic_test_switch"
+          }
+        },
+        {
+          "id": "generic_test_switch",
+          "navigation": {
+            "prev": "generic_dipswitch",
+            "next": "generic_choose_slave"
+          }
+        },
+        {
+          "id": "generic_choose_slave",
+          "navigation": {
+            "prev": "generic_test_switch",
+            "next": "generic_done"
+          },
+          "template": "choose_slave"
+        },
+        {
+          "id": "generic_done",
+          "navigation": {}
+        }
+      ]
+    },
+    {
+      "id": "AB440SC",
+      "name": {
+        "en": "AB440SC"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "small": "./433_generator/assets/AB440R/images/small.jpg",
+        "large": "./433_generator/assets/AB440R/images/large.jpg"
+      },
+      "pair": [
+        {
+          "id": "generic_choice",
+          "navigation": {}
+        },
+        {
+          "id": "generic_imitate",
+          "navigation": {
+            "prev": "generic_choice"
+          }
+        },
+        {
+          "id": "generic_test_switch_2",
+          "navigation": {
+            "prev": "generic_imitate",
+            "next": "generic_choose_slave_2"
+          }
+        },
+        {
+          "id": "generic_choose_slave_2",
+          "navigation": {
+            "prev": "generic_test_switch_2",
+            "next": "generic_done"
+          },
+          "template": "choose_slave"
+        },
+        {
+          "id": "generic_info",
+          "navigation": {
+            "prev": "generic_choice",
+            "next": "generic_dipswitch"
+          }
+        },
+        {
+          "id": "generic_dipswitch",
+          "navigation": {
+            "prev": "generic_info",
+            "next": "generic_test_switch"
+          }
+        },
+        {
+          "id": "generic_test_switch",
+          "navigation": {
+            "prev": "generic_dipswitch",
+            "next": "generic_choose_slave"
+          }
+        },
+        {
+          "id": "generic_choose_slave",
+          "navigation": {
+            "prev": "generic_test_switch",
+            "next": "generic_done"
+          },
+          "template": "choose_slave"
+        },
+        {
+          "id": "generic_done",
+          "navigation": {}
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "AB440R:received",
+        "title": {
+          "en": "Button is pressed\u0000",
+          "nl": "Knop is ingedrukt\u0000"
+        },
+        "args": [
+          {
+            "name": "unit",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "10000",
+                "label": {
+                  "en": "Button A\u0000",
+                  "nl": "Knop A\u0000"
+                }
+              },
+              {
+                "id": "01000",
+                "label": {
+                  "en": "Button B\u0000",
+                  "nl": "Knop B\u0000"
+                }
+              },
+              {
+                "id": "00100",
+                "label": {
+                  "en": "Button C\u0000",
+                  "nl": "Knop C\u0000"
+                }
+              },
+              {
+                "id": "00010",
+                "label": {
+                  "en": "Button D\u0000",
+                  "nl": "Knop D\u0000"
+                }
+              }
+            ]
+          },
+          {
+            "name": "state",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On\u0000",
+                  "nl": "Aan\u0000"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off\u0000",
+                  "nl": "Uit\u0000"
+                }
+              }
+            ]
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=AB440R"
+          }
+        ]
+      }
+    ],
+    "conditions": [],
+    "actions": []
+  }
+}

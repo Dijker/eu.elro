@@ -1,0 +1,114 @@
+{
+	"deviceClasses": {
+		"generic_remote": {
+			"views": {
+				"generic_imitate": {
+					"title": "Identificeer je afstandsbediening\u0000",
+					"body": "Klik op een willekeurige knop op je afstandsbediening om hem te koppelen.\u0000"
+				}
+			}
+		},
+		"generic_dipswitch_socket": {
+			"views": {
+				"generic_choice": {
+					"title": "Kopieer je afstandsbediening of stel de dipswitches handmatig in\u0000",
+					"body": "Kies of je het signaal van een gekoppelde afstandsbediening wil kopiëren of dat je de dipswitches handmatig wil instellen.\u0000",
+					"buttons": {
+						"generic_imitate": "Kopieer je afstandsbediening\u0000",
+						"generic_dipswitch": "Stel de dipswitches in\u0000"
+					}
+				},
+				"generic_info": {
+					"title": "Vind de dipswitches op je contactdoos\u0000",
+					"body": "Vind de dipswitches op je contactdoos zoals hierboven aangegeven, klik daarna op volgende.\u0000"
+				}
+			}
+		},
+		"generic_socket": {
+			"views": {
+				"generic_imitate": {
+					"title": "Kopieer het signaal van je afstandsbediening\u0000",
+					"body": "Druk op de knop van de afstandsbediening waarmee het apparaat gekoppeld is.\u0000"
+				},
+				"generic_test_switch": {
+					"title": "Test je contactdoos\u0000",
+					"body": "Gebruik de bovenstaande knop om je contactdoos te testen. Klik op volgende om verder te gaan.\u0000"
+				},
+				"generic_test_switch_2": {
+					"body": "Gebruik je afstandsbediening of de bovenstaande knop om je contactdoos te testen. Klik op volgende om verder te gaan.\u0000"
+				}
+			}
+		}
+	},
+	"views": {
+		"generic_test_remote": {
+			"title": "Test je apparaat\u0000",
+			"body": "Druk op een willekeurige knop op je afstandsbediening of op de knoppen in het bovenstaande plaatje om het signaal te testen. Klik op volgende om verder te gaan.\u0000"
+		},
+		"generic_done": {
+			"title": "Apparaat wordt toegevoegd!\u0000"
+		},
+		"generic_imitate": {
+			"title": "Kopieer het signaal van je afstandsbediening\u0000",
+			"body": "Druk op de knop op je afstandsbediening waarop je apparaat geprogrammeerd is.\u0000"
+		},
+		"generic_test_switch": {
+			"title": "Test je apparaat\u0000",
+			"body": "Gebruik te bovenstaande switch om je apparaat te testen. Klik op volgende om verder te gaan.\u0000"
+		},
+		"generic_test_switch_2": {
+			"body": "Gebruik je afstandsbediening of de bovenstaande switch om je apparaat te testen. Klik op volgende om verder te gaan.\u0000"
+		},
+		"generic_dipswitch": {
+			"title": "Stel de dipswitches van je apparaat in\u0000",
+			"body": "Klik op de bovenstaande dipswitches om ze gelijk aan de dipswitches van je apparaat in te stellen, klik daarna op volgende.\u0000"
+		}
+	},
+	"433_generator": {
+		"generic": {
+			"button_pressed": "Knop is ingedrukt\u0000",
+			"buttons": {
+				"1": "Knop 1\u0000",
+				"2": "Knop 2\u0000",
+				"3": "Knop 3\u0000",
+				"4": "Knop 4\u0000",
+				"5": "Knop 5\u0000",
+				"A": "Knop A\u0000",
+				"B": "Knop B\u0000",
+				"C": "Knop C\u0000",
+				"D": "Knop D\u0000",
+				"E": "Knop E\u0000",
+				"G": "Groep Knop\u0000",
+				"dim_up": "Dim Omhoog Knop\u0000",
+				"dim_down": "Dim Omlaag Knop\u0000",
+				"left": "Linker Knop\u0000",
+				"middle": "Middelste Knop\u0000",
+				"right": "Rechter Knop\u0000",
+				"bright": null,
+				"dim": null
+			},
+			"on": "Aan\u0000",
+			"off": "Uit\u0000",
+			"left": "Links\u0000",
+			"middle": "Midden\u0000",
+			"right": "Rechts\u0000",
+			"up": "Up\u0000",
+			"down": "Down\u0000"
+		},
+		"error": {
+			"device_exists": "Apparaat is al gekoppeld met Homey.\u0000",
+			"no_device": "Er is geen apparaat ingesteld. Sluit de pairing wizard en probeer opnieuw.\u0000"
+		}
+	},
+	"devices": {
+		"AB440R": {
+			"name": null
+		},
+		"AB440WD": {
+			"name": null
+		},
+		"AB440SC": {
+			"name": null
+		}
+	}
+}

@@ -1,0 +1,123 @@
+{
+	"pair": {
+		"title": "Pair a new Elro socket",
+		"start": {
+			"dipswitch": "Set dipswitches",
+			"imitate": "Copy from remote"
+		},
+		"dipswitch": "Select the channel and unit code",
+		"imitate": "Press the on button on your remote"
+	},
+	"deviceClasses": {
+		"generic_remote": {
+			"views": {
+				"generic_imitate": {
+					"title": "Identify your remote\u0000",
+					"body": "Click a button on your remote to pair it.\u0000"
+				}
+			}
+		},
+		"generic_dipswitch_socket": {
+			"views": {
+				"generic_choice": {
+					"title": "Copy signal from remote or set the dipswitches manually\u0000",
+					"body": "Choose if you want to copy an existing signal from a paired remote or if you want to set the dipswitches of the socket manually.\u0000",
+					"buttons": {
+						"generic_imitate": "Copy a paired remote\u0000",
+						"generic_dipswitch": "Set the dipswitches\u0000"
+					}
+				},
+				"generic_info": {
+					"title": "Locate the dipswitches on your socket\u0000",
+					"body": "Locate the dipswitches on your socket like displayed above, then click next.\u0000"
+				}
+			}
+		},
+		"generic_socket": {
+			"views": {
+				"generic_imitate": {
+					"title": "Copy your remote signal\u0000",
+					"body": "Press the button that is paired to your socket.\u0000"
+				},
+				"generic_test_switch": {
+					"title": "Test your socket\u0000",
+					"body": "Use the switch above to test your socket. Press next to continue.\u0000"
+				},
+				"generic_test_switch_2": {
+					"body": "Use your remote or the switch above to test your socket. Press next to continue.\u0000"
+				}
+			}
+		}
+	},
+	"views": {
+		"generic_test_remote": {
+			"title": "Test your remote\u0000",
+			"body": "Press a random button on your remote or click the button in the image above to test the signal. Press next to continue.\u0000"
+		},
+		"generic_done": {
+			"title": "Adding device!\u0000"
+		},
+		"generic_imitate": {
+			"title": "Copy your remote signal\u0000",
+			"body": "Click the button on your remote that is paired to your device.\u0000"
+		},
+		"generic_test_switch": {
+			"title": "Test your device\u0000",
+			"body": "Use the switch above to test your device. Press next to continue.\u0000"
+		},
+		"generic_test_switch_2": {
+			"body": "Use your remote or the switch above to test your device. Press next to continue.\u0000"
+		},
+		"generic_dipswitch": {
+			"title": "Set dipswitches of device\u0000",
+			"body": "Click on the dipswitches above to put them in the same arrangement as those of your device, then click next.\u0000"
+		}
+	},
+	"433_generator": {
+		"generic": {
+			"button_pressed": "Button is pressed\u0000",
+			"buttons": {
+				"1": "Button 1\u0000",
+				"2": "Button 2\u0000",
+				"3": "Button 3\u0000",
+				"4": "Button 4\u0000",
+				"5": "Button 5\u0000",
+				"A": "Button A\u0000",
+				"B": "Button B\u0000",
+				"C": "Button C\u0000",
+				"D": "Button D\u0000",
+				"E": "Button E\u0000",
+				"G": "Group Button\u0000",
+				"dim_up": "Dim Up Button\u0000",
+				"dim_down": "Dim Down Button\u0000",
+				"left": "Left Button\u0000",
+				"middle": "Middle Button\u0000",
+				"right": "Right Button\u0000",
+				"bright": "Bright\u0000",
+				"dim": "Dim\u0000"
+			},
+			"on": "On\u0000",
+			"off": "Off\u0000",
+			"left": "Left\u0000",
+			"middle": "Middle\u0000",
+			"right": "Right\u0000",
+			"up": "Up\u0000",
+			"down": "Down\u0000"
+		},
+		"error": {
+			"device_exists": "This device is already paired with Homey.\u0000",
+			"no_device": "No device set to pair. Please close the pairing wizard and try again.\u0000"
+		}
+	},
+	"devices": {
+		"AB440R": {
+			"name": "AB440R"
+		},
+		"AB440WD": {
+			"name": "AB440WD"
+		},
+		"AB440SC": {
+			"name": "AB440SC"
+		}
+	}
+}
