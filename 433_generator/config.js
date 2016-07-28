@@ -7,6 +7,7 @@ module.exports = {
 		elro_dipswitch: {
 			driver: './drivers/elro_dip/elro.js',
 			signal: {
+				id: 'elro_dipswitch',
 				sof: [],
 				eof: [300],
 				words: [

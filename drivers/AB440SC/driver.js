@@ -184,19 +184,7 @@ const config = {
 	id: 'AB440SC',
 	class: 'socket',
 	driver: '../../433_generator/drivers/elro_dip/elro.js',
-	signal: {
-		sof: [],
-		eof: [300],
-		words: [
-			[300, 980, 950, 350],
-			[300, 980, 300, 980]
-		],
-		interval: 9940,
-		repetitions: 20,
-		sensitivity: 0.7,
-		minimalLength: 12,
-		maximalLength: 12
-	},
+	signal: 'elro_dipswitch',
 	name: 'devices.AB440SC.name',
 	icon: '../../433_generator/assets/AB440SC/icon.svg'
 };

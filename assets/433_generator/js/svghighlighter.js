@@ -50,16 +50,17 @@ jQuery(function ($) {
 
 	function setClickHandlers(svg) {
 		svg.find('*').add(svg).each(function () {
-			var elem = $(this);
+			var $elem = $(this);
 			var attrs = getAttributes(this);
 			attrs.forEach(function (attribute) {
 				var onClickEvent = onClickRegex.exec(attribute.nodeName);
 				if (onClickEvent) {
-					var data = elem.attr(onClickEvent[0]);
+					var data = $elem.attr(onClickEvent[0]);
 					data = data ? JSON.parse(data) : {};
-					elem.on('click', function () {
+					$elem.on('click', function () {
 						Homey.emit(onClickEvent[1], data);
 					});
+					$elem.css('cursor', 'pointer');
 				}
 			});
 		});

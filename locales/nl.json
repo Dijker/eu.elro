@@ -84,8 +84,9 @@
 				"left": "Linker Knop\u0000",
 				"middle": "Middelste Knop\u0000",
 				"right": "Rechter Knop\u0000",
-				"bright": null,
-				"dim": null
+				"bright": "Fel Knop\u0000",
+				"dim": "Gedimt Knop\u0000",
+				"all": "All Knop\u0000"
 			},
 			"on": "Aan\u0000",
 			"off": "Uit\u0000",
@@ -93,7 +94,24 @@
 			"middle": "Midden\u0000",
 			"right": "Rechts\u0000",
 			"up": "Up\u0000",
-			"down": "Down\u0000"
+			"down": "Down\u0000",
+			"channels": {
+				"1": "Kanaal 1\u0000",
+				"2": "Kanaal 2\u0000",
+				"3": "Kanaal 3\u0000",
+				"4": "Kanaal 4\u0000",
+				"5": "Kanaal 5\u0000",
+				"I": "Kanaal I\u0000",
+				"II": "Kanaal II\u0000",
+				"III": "Kanaal III\u0000",
+				"IV": "Kanaal IV\u0000",
+				"V": "Kanaal V\u0000",
+				"A": "Kanaal A\u0000",
+				"B": "Kanaal B\u0000",
+				"C": "Kanaal C\u0000",
+				"D": "Kanaal D\u0000",
+				"E": "Kanaal E\u0000"
+			}
 		},
 		"error": {
 			"device_exists": "Apparaat is al gekoppeld met Homey.\u0000",

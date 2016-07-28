@@ -62,19 +62,7 @@ const config = {
 	},
 	id: 'AB440R',
 	driver: '../../433_generator/drivers/elro_dip/remote',
-	signal: {
-		sof: [],
-		eof: [300],
-		words: [
-			[300, 980, 950, 350],
-			[300, 980, 300, 980]
-		],
-		interval: 9940,
-		repetitions: 20,
-		sensitivity: 0.7,
-		minimalLength: 12,
-		maximalLength: 12
-	},
+	signal: 'elro_dipswitch',
 	triggers: [{
 		id: 'AB440R:received',
 		title: '433_generator.generic.button_pressed',

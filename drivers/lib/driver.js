@@ -14,6 +14,7 @@ module.exports = class Driver extends EventEmitter {
 		this.state = new Map();
 		this.lastFrame = new Map();
 		this.settings = new Map();
+		this.isPairing = false;
 
 		this.on('frame', (frame) => {
 			this.setLastFrame(frame.id, frame);
@@ -38,8 +39,8 @@ module.exports = class Driver extends EventEmitter {
 
 		this.signal.on('error', this.emit.bind(this, 'signal_error'));
 		this.signal.on('data', (frame) => {
-			this.emit('frame', frame);
 			this.received(frame);
+			this.emit('frame', frame);
 		});
 		this.signal.on('payload_send', payload => {
 			const frame = this.payloadToData(payload);
@@ -121,7 +122,9 @@ module.exports = class Driver extends EventEmitter {
 		const id = this.getDeviceId(device);
 		device = this.getDevice(id);
 		if (device) {
-			this.emit('new_state', device, state, this.state.get(id) || {});
+			if (this.state.has(id)) {
+				this.emit('new_state', device, state, this.state.get(id) || {});
+			}
 			this.state.set(id, state);
 			Homey.manager('settings').set(`${this.config.name}:${id}:state`, state);
 		}
@@ -183,8 +186,10 @@ module.exports = class Driver extends EventEmitter {
 	send(device, data, callback) {
 		data = Object.assign({}, this.getDevice(device, true) || device.data || device, data);
 		this.emit('before_send', data);
-		const frame = this.dataToPayload(data).map(Number);
-		if (!frame) return callback(true);
+
+		const payload = this.dataToPayload(data);
+		if (!payload) return callback(true);
+		const frame = payload.map(Number);
 		const dataCheck = this.payloadToData(frame);
 		if (
 			frame.find(isNaN) || !dataCheck ||
@@ -193,6 +198,7 @@ module.exports = class Driver extends EventEmitter {
 		) {
 			this.emit('error', `Incorrect frame from dataToPayload(${JSON.stringify(data)}) => ${frame} => ${
 				JSON.stringify(dataCheck)}`);
+			return callback(true);
 		}
 		this.emit('send', data);
 		return this.signal.send(frame).then(result => {
@@ -208,7 +214,7 @@ module.exports = class Driver extends EventEmitter {
 	generateDevice(data) {
 		return {
 			name: __(this.config.name),
-			data: data,
+			data: Object.assign({}, data, { driver_id: this.config.id }),
 		};
 	}
 
@@ -245,6 +251,7 @@ module.exports = class Driver extends EventEmitter {
 	}
 
 	pair(socket) { // Pair sequence
+		this.isPairing = true;
 		let receivedListener;
 
 		this.on('frame', receivedListener = socket.emit.bind(this, 'frame'));
@@ -358,6 +365,7 @@ module.exports = class Driver extends EventEmitter {
 		});
 
 		socket.on('disconnect', (data, callback) => {
+			this.isPairing = false;
 			this.removeListener('frame', receivedListener);
 			this.pairingDevice = null;
 			this.state.delete('_pairingDevice');
@@ -367,6 +375,7 @@ module.exports = class Driver extends EventEmitter {
 	}
 
 	handleReceivedTrigger(device, data) {
+		// if(data.id === device.id) TODO check if performance increase
 		Homey.manager('flow').triggerDevice(`${this.config.id}:received`, null, data, this.getDevice(device), err => {
 			if (err) Homey.error('Trigger error', err);
 		});
@@ -422,6 +431,16 @@ module.exports = class Driver extends EventEmitter {
 			this.emit('error', `[Error] inputNumber (${inputNumber}) is a non-integer value`);
 		}
 		return '0'.repeat(length).concat(number.toString(2)).substr(length * -1).split('').map(Number);
+	}
+
+	bitArrayXOR(arrayA, arrayB) {
+		if (arrayA.length !== arrayB.length) {
+			this.emit('error', `[Error] bitarrays [${arrayA}] and [${arrayB}] do not have the same length`);
+		}
+		if (arrayA.find(nr => nr !== 0 && nr !== 1) || arrayB.find(nr => nr !== 0 && nr !== 1)) {
+			this.emit('error', `[Error] Bitarray [${arrayA}] and/or [${arrayB}] contain non-binary values`);
+		}
+		return arrayA.map((val, index) => val !== arrayB[index] ? 1 : 0);
 	}
 
 	getSettings(device) {

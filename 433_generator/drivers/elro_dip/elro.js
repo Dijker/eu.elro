@@ -62,7 +62,7 @@ module.exports = class Elro extends DefaultDriver {
 		exports.capabilities = exports.capabilities || {};
 		exports.capabilities.onoff = {
 			get: (device, callback) => callback(null, Boolean(Number(this.getState(device).state))),
-			set: (device, state, callback) => this.send(device, { state: state ? 1 : 0 }, callback),
+			set: (device, state, callback) => this.send(device, { state: state ? 1 : 0 }, () => callback(null, state)),
 		};
 		return exports;
 	}

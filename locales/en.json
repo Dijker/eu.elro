@@ -93,8 +93,9 @@
 				"left": "Left Button\u0000",
 				"middle": "Middle Button\u0000",
 				"right": "Right Button\u0000",
-				"bright": "Bright\u0000",
-				"dim": "Dim\u0000"
+				"bright": "Bright Button\u0000",
+				"dim": "Dim Button\u0000",
+				"all": "All Button\u0000"
 			},
 			"on": "On\u0000",
 			"off": "Off\u0000",
@@ -102,7 +103,24 @@
 			"middle": "Middle\u0000",
 			"right": "Right\u0000",
 			"up": "Up\u0000",
-			"down": "Down\u0000"
+			"down": "Down\u0000",
+			"channels": {
+				"1": "Channel 1\u0000",
+				"2": "Channel 2\u0000",
+				"3": "Channel 3\u0000",
+				"4": "Channel 4\u0000",
+				"5": "Channel 5\u0000",
+				"I": "Channel I\u0000",
+				"II": "Channel II\u0000",
+				"III": "Channel III\u0000",
+				"IV": "Channel IV\u0000",
+				"V": "Channel V\u0000",
+				"A": "Channel A\u0000",
+				"B": "Channel B\u0000",
+				"C": "Channel C\u0000",
+				"D": "Channel D\u0000",
+				"E": "Channel E\u0000"
+			}
 		},
 		"error": {
 			"device_exists": "This device is already paired with Homey.\u0000",
