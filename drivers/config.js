@@ -246,7 +246,7 @@ module.exports = {
 						initWithDeviceData: false,
 						previous: true,
 						next: true,
-						sendToggleOnInit: true
+						sendToggleOnInit: false
 					},
 					prepend: ['./../assets/433_generator/css/styles.css',
 						'./../assets/433_generator/css/svg.css',
@@ -434,7 +434,7 @@ module.exports = {
 						initWithDeviceData: false,
 						previous: true,
 						next: true,
-						sendToggleOnInit: true
+						sendToggleOnInit: false
 					},
 					prepend: ['./../assets/433_generator/css/styles.css',
 						'./../assets/433_generator/css/svg.css',
