@@ -25,7 +25,7 @@ module.exports = class Driver extends EventEmitter {
 		Homey.log('Initializing driver for', this.config.id);
 		this.realtime = (device, cap, val) => this.getDevice(device) && exports.realtime(this.getDevice(device), cap, val);
 		this.setAvailable = device => this.getDevice(device) && exports.setAvailable(this.getDevice(device));
-		this.setUnavailable = device => this.getDevice(device) && exports.setUnavailable(this.getDevice(device));
+		this.setUnavailable = (device, message) => this.getDevice(device) && exports.setUnavailable(this.getDevice(device), message);
 		this.getSettingsExt = (device, callback) => (this.getDevice(device) &&
 			exports.getSettings(this.getDevice(device), callback)
 		) || (callback && callback(new Error('device id does not exist')));
@@ -33,7 +33,7 @@ module.exports = class Driver extends EventEmitter {
 			exports.setSettings(this.getDevice(device), settings, callback)
 		) || (callback && callback(new Error('device id does not exist')));
 
-		this.signal = new Signal(this.config.signal, this.payloadToData.bind(this), this.config.debounceTimeout || 1000);
+		this.signal = new Signal(this.config.signal, this.payloadToData.bind(this), this.config.debounceTimeout || 500);
 
 		connectedDevices.forEach(this.add.bind(this));
 
@@ -185,10 +185,10 @@ module.exports = class Driver extends EventEmitter {
 		}
 	}
 
-	send(device, data, callback) {
+	send(device, data, callback, options) {
 		return new Promise((resolve, reject) => {
-			this.registerSignal();
 			callback = typeof callback === 'function' ? callback : () => null;
+			options = options || {};
 			data = Object.assign({}, this.getDevice(device, true) || device.data || device, data);
 			this.emit('before_send', data);
 
@@ -207,14 +207,12 @@ module.exports = class Driver extends EventEmitter {
 				return callback(true);
 			}
 			this.emit('send', data);
-			resolve(this.signal.send(frame).then(result => {
+			resolve((options.signal || this.signal).send(frame).then(result => {
 				if (callback) callback(null, result);
 				this.emit('after_send', data);
-				this.unregisterSignal();
 			}).catch(err => {
 				if (callback) callback(err);
 				this.emit('error', err);
-				this.unregisterSignal();
 				throw err;
 			}));
 		});
@@ -266,14 +264,14 @@ module.exports = class Driver extends EventEmitter {
 		throw new Error(`generateData() should be overwritten by own driver for device ${this.config.id}`);
 	}
 
-	sendProgramSignal(device, callback){
+	sendProgramSignal(device, callback) {
 		const exports = this.getExports();
 		if (exports.capabilities) {
 			Object.keys(exports.capabilities).forEach(capability => {
 				if (exports.capabilities[capability].get && exports.capabilities[capability].set) {
 					exports.capabilities[capability].get(device, (err, result) => {
 						if (typeof result === 'boolean') {
-							exports.capabilities[capability].set(device, !result, callback);
+							exports.capabilities[capability].set(device, true, callback);
 						}
 					});
 				}
@@ -311,6 +309,7 @@ module.exports = class Driver extends EventEmitter {
 			}
 
 			this.pairingDevice = device;
+			this.setLastFrame(device, data);
 			this.emit('new_pairing_device', this.pairingDevice);
 			return callback(null, this.pairingDevice);
 		});
@@ -324,6 +323,7 @@ module.exports = class Driver extends EventEmitter {
 			}
 
 			this.pairingDevice = device;
+			this.setLastFrame(device, data);
 			this.emit('new_pairing_device', this.pairingDevice);
 			return callback(null, this.pairingDevice);
 		});
@@ -337,6 +337,7 @@ module.exports = class Driver extends EventEmitter {
 			}
 
 			this.pairingDevice = device;
+			this.setLastFrame(device, data);
 			this.emit('new_pairing_device', this.pairingDevice);
 			return callback(null, this.pairingDevice);
 		});
@@ -353,6 +354,7 @@ module.exports = class Driver extends EventEmitter {
 			}
 
 			this.pairingDevice = device;
+			this.setLastFrame(device, data);
 			this.emit('new_pairing_device', this.pairingDevice);
 			callback(null, this.pairingDevice);
 		});
@@ -365,7 +367,16 @@ module.exports = class Driver extends EventEmitter {
 		});
 
 		socket.on('test', (data, callback) => {
-			callback(!this.pairingDevice, this.pairingDevice);
+			callback(
+				!this.pairingDevice,
+				this.pairingDevice ?
+					Object.assign(
+						{},
+						this.pairingDevice,
+						{ data: Object.assign({}, this.pairingDevice.data, this.getLastFrame(this.pairingDevice)) || {} }
+					) :
+					null
+			);
 		});
 
 		socket.on('done', (data, callback) => {
@@ -376,6 +387,7 @@ module.exports = class Driver extends EventEmitter {
 		});
 
 		socket.on('send', (data, callback) => {
+			console.log('sending', typeof data, data, (this.pairingDevice && this.pairingDevice.data));
 			if (this.pairingDevice && this.pairingDevice.data) {
 				this.send(this.pairingDevice.data, data).then(callback.bind(false)).catch(callback);
 			}
@@ -419,8 +431,8 @@ module.exports = class Driver extends EventEmitter {
 
 		socket.on('assert_device', (data, callback) => this.assertDevice(this.pairingDevice, callback));
 
+		const exports = this.getExports() || {};
 		socket.on('toggle', (data, callback) => {
-			const exports = this.getExports();
 			if (exports.capabilities) {
 				Object.keys(exports.capabilities).forEach(capability => {
 					if (exports.capabilities[capability].get && exports.capabilities[capability].set) {
@@ -437,9 +449,21 @@ module.exports = class Driver extends EventEmitter {
 			callback(null, true);
 		});
 
+		Object.keys(exports.capabilities || {}).forEach(capability => {
+			socket.on(capability, (data, callback) => {
+				exports.capabilities[capability].set(this.pairingDevice.data, data, callback);
+			});
+		});
+
+		const highlightListener = data => {
+			socket.emit('highlight', data);
+		};
+		this.on('highlight', highlightListener);
+
 		socket.on('disconnect', (data, callback) => {
 			this.isPairing = false;
 			this.removeListener('frame', receivedListener);
+			this.removeListener('highlight', highlightListener);
 			this.pairingDevice = null;
 			this.state.delete('_pairingDevice');
 			this.lastFrame.delete('_pairingDevice');
@@ -461,10 +485,11 @@ module.exports = class Driver extends EventEmitter {
 	}
 
 	handleReceivedTrigger(device, data) {
-		// if(data.id === device.id) TODO check if performance increase
-		Homey.manager('flow').triggerDevice(`${this.config.id}:received`, null, data, this.getDevice(device), err => {
-			if (err) Homey.error('Trigger error', err);
-		});
+		if (data.id === device.id) { // TODO check if performance increase // FIXME did it work?
+			Homey.manager('flow').triggerDevice(`${this.config.id}:received`, null, data, this.getDevice(device), err => {
+				if (err) Homey.error('Trigger error', err);
+			});
+		}
 	}
 
 	onTriggerReceived(callback, args, state) {
@@ -516,7 +541,12 @@ module.exports = class Driver extends EventEmitter {
 		if (isNaN(number) || number % 1 !== 0) {
 			this.emit('error', `[Error] inputNumber (${inputNumber}) is a non-integer value`);
 		}
-		return '0'.repeat(length).concat(number.toString(2)).substr(length * -1).split('').map(Number);
+		return '0'
+			.repeat(length)
+			.concat(number.toString(2))
+			.substr(length * -1)
+			.split('')
+			.map(Number);
 	}
 
 	bitArrayXOR(arrayA, arrayB) {

@@ -243,7 +243,7 @@ module.exports = {
 						svg: './../assets/433_generator/images/light.svg',
 						svgWidth: '80vw',
 						svgHeight: '70vh',
-						initWithDeviceData: false,
+						initWithDeviceData: true,
 						previous: true,
 						next: true,
 						sendToggleOnInit: false
@@ -431,7 +431,7 @@ module.exports = {
 						svg: './../assets/433_generator/images/light.svg',
 						svgWidth: '80vw',
 						svgHeight: '70vh',
-						initWithDeviceData: false,
+						initWithDeviceData: true,
 						previous: true,
 						next: true,
 						sendToggleOnInit: false
