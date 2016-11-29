@@ -1,7 +1,8 @@
 # Elro
 
-This app supports wireless Elro switches.
+Adds support for wireless Elro devices.
 
-This version is a major update from the previous version. Unfortunately all devices that were paired with the previous version have to be re-paired. 
+##What's new
 
-If you have feedback please let us know on the forum or our slack channel.
+####v2.3.0
+Added logging and error reporting
