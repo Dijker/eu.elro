@@ -47,7 +47,10 @@ module.exports = class Driver extends EventEmitter {
 				}
 				if (this.captureLevel <= logLevelId) {
 					if (logLevelId === 6 && args[0] instanceof Error) {
-						this.logger.captureException(args[0], { level: sentryLevelMap.get(logLevelId) });
+						this.logger.captureException(
+							args[0],
+							Object.assign({ level: sentryLevelMap.get(logLevelId) }, typeof args[1] === 'object' ? args[1] : null)
+						);
 					} else {
 						this.logger.captureMessage(Array.prototype.join.call(args, ' '), { level: sentryLevelMap.get(logLevelId) });
 					}
@@ -337,7 +340,12 @@ module.exports = class Driver extends EventEmitter {
 			this.emit('before_send', data);
 
 			const payload = this.dataToPayload(data);
-			if (!payload) return callback(true);
+			if (!payload) {
+				const err = new Error(`DataToPayload(${JSON.stringify(data)}) gave empty response: ${payload}`);
+				this.logger.error(err);
+				reject(err);
+				return callback(err);
+			}
 			const frame = payload.map(Number);
 			const dataCheck = this.payloadToData(frame);
 			if (
@@ -421,7 +429,10 @@ module.exports = class Driver extends EventEmitter {
 				if (exports.capabilities[capability].get && exports.capabilities[capability].set) {
 					exports.capabilities[capability].get(device, (err, result) => {
 						if (typeof result === 'boolean') {
-							this.logger.info('sending program', `capabilities.${capability}.set(${device}, true, ${callback})`);
+							this.logger.info(
+								'sending program',
+								`capabilities.${capability}.set(${JSON.stringify(device)}, true, ${callback})`
+							);
 							exports.capabilities[capability].set(device, true, callback);
 						}
 					});
@@ -437,8 +448,8 @@ module.exports = class Driver extends EventEmitter {
 	pair(socket) { // Pair sequence
 		this.logger.verbose('Driver:pair(socket)', socket);
 		this.logger.info('opening pair wizard');
-		this.registerSignal();
 		this.isPairing = true;
+		this.registerSignal();
 		const receivedListener = (frame) => {
 			this.logger.verbose('emitting frame to pairing wizard', frame);
 			socket.emit('frame', frame);
@@ -497,7 +508,7 @@ module.exports = class Driver extends EventEmitter {
 		socket.on('set_device_codewheels', (codewheelIndexes, callback) => {
 			this.logger.verbose(
 				'Driver:pair->set_device_codewheels(codewheelIndexes, callback)+this.pairingDevice',
-				dipswitches, callback, this.pairingDevice
+				codewheelIndexes, callback, this.pairingDevice
 			);
 			const data = this.codewheelsToData(codewheelIndexes.slice(0));
 			if (!data) return callback(new Error('433_generator.error.invalid_codewheelIndexes'));
@@ -559,6 +570,37 @@ module.exports = class Driver extends EventEmitter {
 					) :
 					null
 			);
+		});
+
+		socket.on('override_device', (data, callback) => {
+			if (!this.pairingDevice) {
+				return callback(new Error('433_generator.error.no_device'));
+			}
+			if (!(data && data.constructor === Object)) {
+				return callback(new Error('Data must be an object!'), this.pairingDevice.data);
+			}
+			const newPairingDeviceData = Object.assign({}, this.pairingDevice.data, data);
+			const payload = this.dataToPayload(newPairingDeviceData);
+			if (!payload) {
+				return callback(
+					new Error('New pairing device data is invalid, changes are reverted.'),
+					this.pairingDevice.data
+				);
+			}
+			const frame = payload.map(Number);
+			const dataCheck = this.payloadToData(frame);
+			if (
+				frame.find(isNaN) || !dataCheck ||
+				dataCheck.constructor !== Object || !dataCheck.id ||
+				dataCheck.id !== this.getDeviceId(newPairingDeviceData)
+			) {
+				return callback(
+					new Error('New pairing device data is invalid, changes are reverted.'),
+					this.pairingDevice.data
+				);
+			}
+			this.pairingDevice.data = newPairingDeviceData;
+			callback(null, this.pairingDevice.data);
 		});
 
 		socket.on('done', (data, callback) => {
@@ -703,10 +745,6 @@ module.exports = class Driver extends EventEmitter {
 
 	onTriggerReceived(callback, args, state) {
 		this.logger.silly('Driver:onTriggerReceived(callback, args, state)', callback, args, state);
-		if (args.device) {
-			args.id = args.device.id;
-			delete args.device;
-		}
 		callback(null, Object.keys(args).reduce(
 			(result, curr) => result && String(args[curr]) === String(state[curr]),
 			true
