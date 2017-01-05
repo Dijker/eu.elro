@@ -344,6 +344,7 @@ module.exports = class Driver extends EventEmitter {
 				const err = new Error(`DataToPayload(${JSON.stringify(data)}) gave empty response: ${payload}`);
 				this.logger.error(err);
 				reject(err);
+				this.setUnavailable(device, __('433_generator.error.invalid_device'));
 				return callback(err);
 			}
 			const frame = payload.map(Number);
@@ -356,8 +357,8 @@ module.exports = class Driver extends EventEmitter {
 				const err = new Error(`Incorrect frame from dataToPayload(${JSON.stringify(data)}) => ${frame} => ${
 					JSON.stringify(dataCheck)}`);
 				this.logger.error(err);
-				this.emit('error', err);
 				reject(err);
+				this.setUnavailable(device, __('433_generator.error.invalid_device'));
 				return callback(true);
 			}
 			this.emit('send', data);
@@ -377,7 +378,7 @@ module.exports = class Driver extends EventEmitter {
 		this.logger.silly('Driver:generateDevice(data)', data);
 		return {
 			name: __(this.config.name),
-			data: Object.assign({}, data, { driver_id: this.config.id }),
+			data: Object.assign({ overridden: false }, data, { driver_id: this.config.id }),
 		};
 	}
 
@@ -536,7 +537,7 @@ module.exports = class Driver extends EventEmitter {
 			);
 			let device;
 			do {
-				device = this.generateDevice(this.generateData());
+				device = this.generateDevice(Object.assign(this.generateData(), { generated: true }));
 			} while (this.get(device));
 			if (!device) {
 				return callback(new Error('433_generator.error.invalid_device'));
@@ -579,7 +580,7 @@ module.exports = class Driver extends EventEmitter {
 			if (!(data && data.constructor === Object)) {
 				return callback(new Error('Data must be an object!'), this.pairingDevice.data);
 			}
-			const newPairingDeviceData = Object.assign({}, this.pairingDevice.data, data);
+			const newPairingDeviceData = Object.assign({}, this.pairingDevice.data, data, { overridden: true });
 			const payload = this.dataToPayload(newPairingDeviceData);
 			if (!payload) {
 				return callback(
@@ -823,6 +824,13 @@ module.exports = class Driver extends EventEmitter {
 			this.emit('error', err);
 		}
 		return arrayA.map((val, index) => val !== arrayB[index] ? 1 : 0);
+	}
+
+	generateRandomBitString(length) {
+		return new Array(length)
+			.fill(null)
+			.map(() => Math.round(Math.random()))
+			.join('');
 	}
 
 	getSettings(device) {
