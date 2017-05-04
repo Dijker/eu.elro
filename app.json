@@ -1,6 +1,6 @@
 {
   "id": "nl.elro",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "compatibility": ">=0.9",
   "category": [
     "appliances",
@@ -300,7 +300,7 @@
         ],
         "interval": 9940,
         "repetitions": 20,
-        "sensitivity": 0.7,
+        "sensitivity": 0.5,
         "minimalLength": 12,
         "maximalLength": 12
       }

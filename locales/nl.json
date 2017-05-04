@@ -73,6 +73,17 @@
 				"3": "Knop 3\u0000",
 				"4": "Knop 4\u0000",
 				"5": "Knop 5\u0000",
+				"6": "Knop 6\u0000",
+				"7": "Knop 7\u0000",
+				"8": "Knop 8\u0000",
+				"9": "Knop 9\u0000",
+				"10": "Knop 10\u0000",
+				"11": "Knop 11\u0000",
+				"12": "Knop 12\u0000",
+				"13": "Knop 13\u0000",
+				"14": "Knop 14\u0000",
+				"15": "Knop 15\u0000",
+				"16": "Knop 16\u0000",
 				"A": "Knop A\u0000",
 				"B": "Knop B\u0000",
 				"C": "Knop C\u0000",
@@ -86,7 +97,8 @@
 				"right": "Rechter Knop\u0000",
 				"bright": "Fel Knop\u0000",
 				"dim": "Gedimt Knop\u0000",
-				"all": "All Knop\u0000"
+				"all": "All Knop\u0000",
+				"F": "Knop F\u0000"
 			},
 			"on": "Aan\u0000",
 			"off": "Uit\u0000",
@@ -110,7 +122,26 @@
 				"B": "Kanaal B\u0000",
 				"C": "Kanaal C\u0000",
 				"D": "Kanaal D\u0000",
-				"E": "Kanaal E\u0000"
+				"E": "Kanaal E\u0000",
+				"F": "Kanaal F\u0000"
+			},
+			"units": {
+				"1": "Unit 1\u0000",
+				"2": "Unit 2\u0000",
+				"3": "Unit 3\u0000",
+				"4": "Unit 4\u0000",
+				"5": "Unit 5\u0000",
+				"6": "Unit 6\u0000",
+				"7": "Unit 7\u0000",
+				"8": "Unit 8\u0000",
+				"9": "Unit 9\u0000",
+				"10": "Unit 10\u0000",
+				"11": "Unit 11\u0000",
+				"12": "Unit 12\u0000",
+				"13": "Unit 13\u0000",
+				"14": "Unit 14\u0000",
+				"15": "Unit 15\u0000",
+				"16": "Unit 16\u0000"
 			}
 		},
 		"error": {

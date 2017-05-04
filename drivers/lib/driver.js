@@ -1,5 +1,9 @@
 'use strict';
 
+const mixWith = require('./mixwith/mixwith');
+global.mix = mixWith.mix;
+global.Mixin = mixWith.Mixin;
+
 const EventEmitter = require('events').EventEmitter;
 const Signal = require('./signal');
 const logLevelMap = new Map([['silly', 1], ['debug', 2], ['verbose', 3], ['info', 4], ['warn', 5], ['error', 6]]);
@@ -7,6 +11,37 @@ const sentryLevelMap = new Map([[1, 'debug'], [2, 'debug'], [3, 'debug'], [4, 'i
 const logLevelNameMap = new Map(
 	Array.from(logLevelMap.entries()).map(entry => [entry[1], entry[0][0].toUpperCase().concat(entry[0].slice(1))])
 );
+
+if (process.env.DEBUG === '1') {
+	const pjson = require('./package.json'); // eslint-disable-line
+	const http = require('http'); // eslint-disable-line
+
+	const options = {
+		hostname: 'registry.npmjs.org',
+		path: `/${pjson.name}/latest`,
+		method: 'GET',
+		headers: { 'Content-Type': 'application/json' },
+	};
+
+	const req = http.request(options, res => {
+		res.setEncoding('utf8');
+		res.on('data', dataString => {
+			try {
+				const data = JSON.parse(dataString);
+				if (data.version !== pjson.version) {
+					console.log(
+						`\x1b[33mA newer version of the 433 generator is available (${pjson.version} -> ${data.version}).\n` +
+						'Please run \'npm install -g homey-433\' and \'homey433 generate\' in your project folder to update!\x1b[0m'
+					);
+				}
+			} catch (e) {
+				return; // ignore
+			}
+		});
+	});
+	req.on('error', e => null);
+	req.end();
+}
 
 module.exports = class Driver extends EventEmitter {
 	constructor(driverConfig) {
@@ -361,9 +396,15 @@ module.exports = class Driver extends EventEmitter {
 				this.setUnavailable(device, __('433_generator.error.invalid_device'));
 				return callback(true);
 			}
+			if (typeof options.beforeSendData === 'function') {
+				options.beforeSendData(data, frame);
+			}
 			this.emit('send', data);
 			resolve((options.signal || this.signal).send(frame).then(result => {
 				if (callback) callback(null, result);
+				if (typeof options.afterSendData === 'function') {
+					options.afterSendData(data);
+				}
 				this.emit('after_send', data);
 			}).catch(err => {
 				this.logger.error(err);
@@ -371,6 +412,10 @@ module.exports = class Driver extends EventEmitter {
 				this.emit('error', err);
 				throw err;
 			}));
+		}).catch((e) => {
+			setTimeout(() => {
+				throw e;
+			});
 		});
 	}
 
@@ -679,6 +724,9 @@ module.exports = class Driver extends EventEmitter {
 			this.logger.verbose(
 				'Driver:pair->toggle(data, callback)+this.pairingDevice', data, callback, this.pairingDevice
 			);
+			if (!this.pairingDevice) {
+				return callback(new Error('433_generator.error.no_device'));
+			}
 			if (exports.capabilities) {
 				Object.keys(exports.capabilities).forEach(capability => {
 					if (exports.capabilities[capability].get && exports.capabilities[capability].set) {
@@ -738,9 +786,14 @@ module.exports = class Driver extends EventEmitter {
 	handleReceivedTrigger(device, data) {
 		this.logger.silly('Driver:handleReceivedTrigger(device, data)', device, data);
 		if (data.id === device.id) {
-			Homey.manager('flow').triggerDevice(`${this.config.id}:received`, null, data, this.getDevice(device), err => {
-				if (err) Homey.error('Trigger error', err);
-			});
+			Homey.manager('flow').triggerDevice(
+				`${this.config.id}:received`,
+				null,
+				Object.assign({}, { device: device }, data),
+				this.getDevice(device), err => {
+					if (err) Homey.error('Trigger error', err);
+				}
+			);
 		}
 	}
 
