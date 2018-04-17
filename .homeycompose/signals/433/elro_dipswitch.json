@@ -1,0 +1,13 @@
+{
+    "sof": [],
+    "eof": [300],
+    "words": [
+        [300, 980, 950, 350],
+        [300, 980, 300, 980]
+    ],
+    "interval": 9940,
+    "repetitions": 10,
+    "sensitivity": 0.4,
+    "minimalLength": 12,
+    "maximalLength": 12
+}

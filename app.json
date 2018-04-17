@@ -1,7 +1,8 @@
 {
   "id": "nl.elro",
-  "version": "2.4.0",
-  "compatibility": ">=0.9",
+  "version": "3.0.0",
+  "compatibility": ">=1.5.0",
+  "sdk": 2,
   "category": [
     "appliances",
     "lights"
@@ -15,7 +16,8 @@
     "nl": "Laat Homey Elro apparaten aansturen"
   },
   "author": {
-    "name": "Athom B.V."
+    "name": "Athom B.V.",
+    "email": "info@athom.com"
   },
   "images": {
     "large": "./assets/images/large.png",
@@ -24,194 +26,20 @@
   "permissions": [
     "homey:wireless:433"
   ],
-  "drivers": [
-    {
-      "id": "AB440R",
-      "name": {
-        "en": "AB440R"
-      },
-      "class": "other",
-      "capabilities": [],
-      "images": {
-        "small": "./433_generator/assets/AB440R/images/small.jpg",
-        "large": "./433_generator/assets/AB440R/images/large.jpg"
-      },
-      "pair": [
-        {
-          "id": "generic_imitate",
-          "navigation": {}
-        },
-        {
-          "id": "generic_test_remote",
-          "navigation": {
-            "prev": "generic_imitate",
-            "next": "generic_done"
-          }
-        },
-        {
-          "id": "generic_done",
-          "navigation": {}
-        }
-      ]
-    },
-    {
-      "id": "AB440WD",
-      "name": {
-        "en": "AB440WD"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff"
-      ],
-      "images": {
-        "small": "./433_generator/assets/AB440WD/images/small.jpg",
-        "large": "./433_generator/assets/AB440WD/images/large.jpg"
-      },
-      "pair": [
-        {
-          "id": "generic_choice",
-          "navigation": {}
-        },
-        {
-          "id": "generic_imitate",
-          "navigation": {
-            "prev": "generic_choice"
-          }
-        },
-        {
-          "id": "generic_test_switch_2",
-          "navigation": {
-            "prev": "generic_imitate",
-            "next": "generic_choose_slave_2"
-          }
-        },
-        {
-          "id": "generic_choose_slave_2",
-          "navigation": {
-            "prev": "generic_test_switch_2",
-            "next": "generic_done"
-          },
-          "template": "choose_slave"
-        },
-        {
-          "id": "generic_info",
-          "navigation": {
-            "prev": "generic_choice",
-            "next": "generic_dipswitch"
-          }
-        },
-        {
-          "id": "generic_dipswitch",
-          "navigation": {
-            "prev": "generic_info",
-            "next": "generic_test_switch"
-          }
-        },
-        {
-          "id": "generic_test_switch",
-          "navigation": {
-            "prev": "generic_dipswitch",
-            "next": "generic_choose_slave"
-          }
-        },
-        {
-          "id": "generic_choose_slave",
-          "navigation": {
-            "prev": "generic_test_switch",
-            "next": "generic_done"
-          },
-          "template": "choose_slave"
-        },
-        {
-          "id": "generic_done",
-          "navigation": {}
-        }
-      ]
-    },
-    {
-      "id": "AB440SC",
-      "name": {
-        "en": "AB440SC"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff"
-      ],
-      "images": {
-        "small": "./433_generator/assets/AB440SC/images/small.jpg",
-        "large": "./433_generator/assets/AB440SC/images/large.jpg"
-      },
-      "pair": [
-        {
-          "id": "generic_choice",
-          "navigation": {}
-        },
-        {
-          "id": "generic_imitate",
-          "navigation": {
-            "prev": "generic_choice"
-          }
-        },
-        {
-          "id": "generic_test_switch_2",
-          "navigation": {
-            "prev": "generic_imitate",
-            "next": "generic_choose_slave_2"
-          }
-        },
-        {
-          "id": "generic_choose_slave_2",
-          "navigation": {
-            "prev": "generic_test_switch_2",
-            "next": "generic_done"
-          },
-          "template": "choose_slave"
-        },
-        {
-          "id": "generic_info",
-          "navigation": {
-            "prev": "generic_choice",
-            "next": "generic_dipswitch"
-          }
-        },
-        {
-          "id": "generic_dipswitch",
-          "navigation": {
-            "prev": "generic_info",
-            "next": "generic_test_switch"
-          }
-        },
-        {
-          "id": "generic_test_switch",
-          "navigation": {
-            "prev": "generic_dipswitch",
-            "next": "generic_choose_slave"
-          }
-        },
-        {
-          "id": "generic_choose_slave",
-          "navigation": {
-            "prev": "generic_test_switch",
-            "next": "generic_done"
-          },
-          "template": "choose_slave"
-        },
-        {
-          "id": "generic_done",
-          "navigation": {}
-        }
-      ]
-    }
-  ],
   "flow": {
     "triggers": [
       {
         "id": "AB440R:received",
         "title": {
-          "en": "Button is pressed\u0000",
-          "nl": "Knop is ingedrukt\u0000"
+          "en": "Button is pressed",
+          "nl": "Knop is ingedrukt"
         },
         "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=AB440R"
+          },
           {
             "name": "unit",
             "type": "dropdown",
@@ -219,29 +47,29 @@
               {
                 "id": "10000",
                 "label": {
-                  "en": "Button A\u0000",
-                  "nl": "Knop A\u0000"
+                  "en": "Button A",
+                  "nl": "Knop A"
                 }
               },
               {
                 "id": "01000",
                 "label": {
-                  "en": "Button B\u0000",
-                  "nl": "Knop B\u0000"
+                  "en": "Button B",
+                  "nl": "Knop B"
                 }
               },
               {
                 "id": "00100",
                 "label": {
-                  "en": "Button C\u0000",
-                  "nl": "Knop C\u0000"
+                  "en": "Button C",
+                  "nl": "Knop C"
                 }
               },
               {
                 "id": "00010",
                 "label": {
-                  "en": "Button D\u0000",
-                  "nl": "Knop D\u0000"
+                  "en": "Button D",
+                  "nl": "Knop D"
                 }
               }
             ]
@@ -253,30 +81,299 @@
               {
                 "id": "1",
                 "label": {
-                  "en": "On\u0000",
-                  "nl": "Aan\u0000"
+                  "en": "On",
+                  "nl": "Aan"
                 }
               },
               {
                 "id": "0",
                 "label": {
-                  "en": "Off\u0000",
-                  "nl": "Uit\u0000"
+                  "en": "Off",
+                  "nl": "Uit"
                 }
               }
             ]
-          },
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=AB440R"
           }
         ]
       }
-    ],
-    "conditions": [],
-    "actions": []
+    ]
   },
+  "drivers": [
+    {
+      "capabilities": [],
+      "images": {
+        "large": "/drivers/AB440R/assets/images/large.png",
+        "small": "/drivers/AB440R/assets/images/small.png"
+      },
+      "icon": "/drivers/AB440R/assets/icon.svg",
+      "class": "other",
+      "pair": [
+        {
+          "id": "rf.imitate",
+          "options": {
+            "title": "rf.pair.imitate.title.remote",
+            "body": "rf.pair.imitate.body.remote",
+            "svg": "assets/pair.svg"
+          },
+          "navigation": {
+            "next": "rf.test"
+          }
+        },
+        {
+          "id": "rf.test",
+          "navigation": {
+            "prev": "rf.imitate",
+            "next": "rf.done"
+          },
+          "options": {
+            "svg": "assets/test.svg"
+          }
+        },
+        {
+          "id": "rf.done"
+        }
+      ],
+      "id": "AB440R",
+      "name": {
+        "en": "AB440R"
+      },
+      "rf": {
+        "signal": "elro_dipswitch"
+      }
+    },
+    {
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "large": "/drivers/AB440SC/assets/images/large.png",
+        "small": "/drivers/AB440SC/assets/images/small.png"
+      },
+      "icon": "/drivers/AB440SC/assets/icon.svg",
+      "class": "socket",
+      "pair": [
+        {
+          "id": "rf.choice",
+          "options": {
+            "title": "rf.pair.choice.title.dipswitch",
+            "body": "rf.pair.choice.body.dipswitch",
+            "choices": [
+              {
+                "name": "rf.pair.choice.buttons.copy.default",
+                "view": "rf.imitate",
+                "svg": "assets/remote.svg"
+              },
+              {
+                "name": "rf.pair.choice.buttons.generate.dipswitch",
+                "view": "rf.info",
+                "svg": "assets/dipswitches.svg"
+              }
+            ]
+          }
+        },
+        {
+          "id": "rf.imitate",
+          "navigation": {
+            "prev": "rf.choice"
+          },
+          "options": {
+            "svg": "assets/remote.svg"
+          }
+        },
+        {
+          "id": "rf.test_switch",
+          "navigation": {
+            "prev": "rf.imitate",
+            "next": "choose_slave"
+          }
+        },
+        {
+          "template": "choose_slave",
+          "id": "choose_slave",
+          "navigation": {
+            "prev": "rf.test_switch",
+            "next": "rf.done"
+          }
+        },
+        {
+          "id": "rf.info",
+          "options": {
+            "title": "rf.pair.info.title.dipswitch",
+            "body": "rf.pair.info.body.dipswitch",
+            "svg": "assets/dipswitches.svg"
+          },
+          "navigation": {
+            "prev": "rf.choice",
+            "next": "rf.dipswitch"
+          }
+        },
+        {
+          "id": "rf.dipswitch",
+          "options": {
+            "dipswitchList": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ]
+          },
+          "navigation": {
+            "prev": "rf.info"
+          }
+        },
+        {
+          "id": "rf.test_switch.2",
+          "options": {
+            "body": "rf.pair.test.body.switch_generated"
+          },
+          "navigation": {
+            "prev": "rf.dipswitch",
+            "next": "choose_slave.2"
+          }
+        },
+        {
+          "template": "choose_slave",
+          "id": "choose_slave.2",
+          "navigation": {
+            "prev": "rf.test_switch.2",
+            "next": "rf.done"
+          }
+        },
+        {
+          "id": "rf.done"
+        }
+      ],
+      "id": "AB440SC",
+      "name": {
+        "en": "AB440SC"
+      },
+      "rf": {
+        "signal": "elro_dipswitch"
+      }
+    },
+    {
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "large": "/drivers/AB440WD/assets/images/large.png",
+        "small": "/drivers/AB440WD/assets/images/small.png"
+      },
+      "icon": "/drivers/AB440WD/assets/icon.svg",
+      "class": "socket",
+      "pair": [
+        {
+          "id": "rf.choice",
+          "options": {
+            "title": "rf.pair.choice.title.dipswitch",
+            "body": "rf.pair.choice.body.dipswitch",
+            "choices": [
+              {
+                "name": "rf.pair.choice.buttons.copy.default",
+                "view": "rf.imitate",
+                "svg": "assets/remote.svg"
+              },
+              {
+                "name": "rf.pair.choice.buttons.generate.dipswitch",
+                "view": "rf.info",
+                "svg": "assets/dipswitches.svg"
+              }
+            ]
+          }
+        },
+        {
+          "id": "rf.imitate",
+          "navigation": {
+            "prev": "rf.choice"
+          },
+          "options": {
+            "svg": "assets/remote.svg"
+          }
+        },
+        {
+          "id": "rf.test_switch",
+          "navigation": {
+            "prev": "rf.imitate",
+            "next": "choose_slave"
+          }
+        },
+        {
+          "template": "choose_slave",
+          "id": "choose_slave",
+          "navigation": {
+            "prev": "rf.test_switch",
+            "next": "rf.done"
+          }
+        },
+        {
+          "id": "rf.info",
+          "options": {
+            "title": "rf.pair.info.title.dipswitch",
+            "body": "rf.pair.info.body.dipswitch",
+            "svg": "assets/dipswitches.svg"
+          },
+          "navigation": {
+            "prev": "rf.choice",
+            "next": "rf.dipswitch"
+          }
+        },
+        {
+          "id": "rf.dipswitch",
+          "options": {
+            "dipswitchList": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ]
+          },
+          "navigation": {
+            "prev": "rf.info"
+          }
+        },
+        {
+          "id": "rf.test_switch.2",
+          "options": {
+            "body": "rf.pair.test.body.switch_generated"
+          },
+          "navigation": {
+            "prev": "rf.dipswitch",
+            "next": "choose_slave.2"
+          }
+        },
+        {
+          "template": "choose_slave",
+          "id": "choose_slave.2",
+          "navigation": {
+            "prev": "rf.test_switch.2",
+            "next": "rf.done"
+          }
+        },
+        {
+          "id": "rf.done"
+        }
+      ],
+      "id": "AB440WD",
+      "name": {
+        "en": "AB440WD"
+      },
+      "rf": {
+        "signal": "elro_dipswitch"
+      }
+    }
+  ],
   "signals": {
     "433": {
       "elro_dipswitch": {
@@ -299,8 +396,8 @@
           ]
         ],
         "interval": 9940,
-        "repetitions": 20,
-        "sensitivity": 0.5,
+        "repetitions": 10,
+        "sensitivity": 0.4,
         "minimalLength": 12,
         "maximalLength": 12
       }

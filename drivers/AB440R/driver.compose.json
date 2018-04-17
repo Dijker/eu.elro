@@ -1,0 +1,85 @@
+{
+    "$extends": ["defaults", "rf.remote"],
+    "id": "AB440R",
+    "name": {
+        "en": "AB440R"
+    },
+    "$pairOptions": {
+        "rf.imitate": {
+            "svg": "assets/pair.svg"
+        },
+        "rf.test": {
+            "svg": "assets/test.svg"
+        }
+    },
+    "rf": {
+        "signal": "elro_dipswitch"
+    },
+    "$flow": {
+        "triggers": [
+            {
+                "id": "{{driverId}}:received",
+                "title": {
+                    "en": "Button is pressed",
+                    "nl": "Knop is ingedrukt"
+                },
+                "args": [
+                    {
+                        "name": "unit",
+                        "type": "dropdown",
+                        "values": [
+                            {
+                                "id": "10000",
+                                "label": {
+                                    "en": "Button A",
+                                    "nl": "Knop A"
+                                }
+                            },
+                            {
+                                "id": "01000",
+                                "label": {
+                                    "en": "Button B",
+                                    "nl": "Knop B"
+                                }
+                            },
+                            {
+                                "id": "00100",
+                                "label": {
+                                    "en": "Button C",
+                                    "nl": "Knop C"
+                                }
+                            },
+                            {
+                                "id": "00010",
+                                "label": {
+                                    "en": "Button D",
+                                    "nl": "Knop D"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "state",
+                        "type": "dropdown",
+                        "values": [
+                            {
+                                "id": "1",
+                                "label": {
+                                    "en": "On",
+                                    "nl": "Aan"
+                                }
+                            },
+                            {
+                                "id": "0",
+                                "label": {
+                                    "en": "Off",
+                                    "nl": "Uit"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="308.826px" height="883.925px" viewBox="0 0 308.826 883.925" enable-background="new 0 0 308.826 883.925"
-	 xml:space="preserve" xmlns:pulse="-" xmlns:onclick="-" >
+	 xml:space="preserve">
 <g>
 	<path d="M285.583,883.204v-2.114c0-10.362,0.148-22.65,0.319-36.879c0.813-67.247,2.038-168.87-11.493-219.37
 		c-8.632-32.219-10.104-94.398-9.682-184.283c0.402-85.724-0.2-184.796-0.731-272.205c-0.333-54.672-0.647-106.312-0.63-144.138
@@ -244,35 +244,35 @@
 	c0.03-9.512,0.163-20.519,0.314-33.03c0.55-45.546,1.288-106.822-2.497-157.474h16.916v166.089
 	C303.156,860.212,300.269,867.15,295.026,872.394z"/>
 <g>
-	<path pulse:unit="10000" pulse:state="1" onclick:send='{ "state": 1, "unit": "10000" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,291.329c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M93.644,291.329c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		v-49.772H93.644V291.329z"/>
 </g>
 <g>
-	<path pulse:unit="01000" pulse:state="1" onclick:send='{ "state": 1, "unit": "01000" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,378.306c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M93.644,378.306c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		V378.31H93.644V378.306z"/>
 </g>
 <g>
-	<path pulse:unit="00100" pulse:state="1" onclick:send='{ "state": 1, "unit": "00100" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,466.005c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M93.644,466.005c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		v-49.776H93.644z"/>
 </g>
 <g>
-	<path pulse:unit="00010" pulse:state="1" onclick:send='{ "state": 1, "unit": "00010" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,550.766c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M93.644,550.766c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		V550.77H93.644V550.766z"/>
 </g>
 <g>
-	<path pulse:unit="10000" pulse:state="0" onclick:send='{ "state": 0, "unit": "10000" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,291.329c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M214.987,291.329c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		v-49.772h42.513V291.329z"/>
 </g>
 <g>
-	<path pulse:unit="01000" pulse:state="0" onclick:send='{ "state": 0, "unit": "01000" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,378.306c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M214.987,378.306c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		V378.31h42.513V378.306z"/>
 </g>
 <g>
-	<path pulse:unit="00100" pulse:state="0" onclick:send='{ "state": 0, "unit": "00100" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,466.005c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M214.987,466.005c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		v-49.776H214.987z"/>
 </g>
 <g>
-	<path pulse:unit="00010" pulse:state="0" onclick:send='{ "state": 0, "unit": "00010" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,550.766c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M214.987,550.766c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		V550.77h42.513V550.766z"/>
 </g>
 </svg>
