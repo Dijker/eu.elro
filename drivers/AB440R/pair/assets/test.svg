@@ -244,35 +244,35 @@
 	c0.03-9.512,0.163-20.519,0.314-33.03c0.55-45.546,1.288-106.822-2.497-157.474h16.916v166.089
 	C303.156,860.212,300.269,867.15,295.026,872.394z"/>
 <g>
-	<path pulse:unit="10000" pulse:state="1" onclick:send='{ "state": 1, "unit": "10000" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,291.329c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path pulse:unit="10000" pulse:state="1" fill-rule="evenodd" clip-rule="evenodd" d="M93.644,291.329c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		v-49.772H93.644V291.329z"/>
 </g>
 <g>
-	<path pulse:unit="01000" pulse:state="1" onclick:send='{ "state": 1, "unit": "01000" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,378.306c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path pulse:unit="01000" pulse:state="1" fill-rule="evenodd" clip-rule="evenodd" d="M93.644,378.306c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		V378.31H93.644V378.306z"/>
 </g>
 <g>
-	<path pulse:unit="00100" pulse:state="1" onclick:send='{ "state": 1, "unit": "00100" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,466.005c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path pulse:unit="00100" pulse:state="1" fill-rule="evenodd" clip-rule="evenodd" d="M93.644,466.005c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		v-49.776H93.644z"/>
 </g>
 <g>
-	<path pulse:unit="00010" pulse:state="1" onclick:send='{ "state": 1, "unit": "00010" }' fill-rule="evenodd" clip-rule="evenodd" d="M93.644,550.766c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
+	<path pulse:unit="00010" pulse:state="1" fill-rule="evenodd" clip-rule="evenodd" d="M93.644,550.766c-40.642,0-42.292,49.986,0,49.986l42.517-0.21
 		V550.77H93.644V550.766z"/>
 </g>
 <g>
-	<path pulse:unit="10000" pulse:state="0" onclick:send='{ "state": 0, "unit": "10000" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,291.329c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path pulse:unit="10000" pulse:state="0" fill-rule="evenodd" clip-rule="evenodd" d="M214.987,291.329c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		v-49.772h42.513V291.329z"/>
 </g>
 <g>
-	<path pulse:unit="01000" pulse:state="0" onclick:send='{ "state": 0, "unit": "01000" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,378.306c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path pulse:unit="01000" pulse:state="0" fill-rule="evenodd" clip-rule="evenodd" d="M214.987,378.306c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		V378.31h42.513V378.306z"/>
 </g>
 <g>
-	<path pulse:unit="00100" pulse:state="0" onclick:send='{ "state": 0, "unit": "00100" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,466.005c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path pulse:unit="00100" pulse:state="0" fill-rule="evenodd" clip-rule="evenodd" d="M214.987,466.005c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		v-49.776H214.987z"/>
 </g>
 <g>
-	<path pulse:unit="00010" pulse:state="0" onclick:send='{ "state": 0, "unit": "00010" }' fill-rule="evenodd" clip-rule="evenodd" d="M214.987,550.766c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
+	<path pulse:unit="00010" pulse:state="0" fill-rule="evenodd" clip-rule="evenodd" d="M214.987,550.766c40.641,0,42.292,49.986,0,49.986l-42.513-0.21
 		V550.77h42.513V550.766z"/>
 </g>
 </svg>

@@ -3,36 +3,12 @@
   "name": {
     "en": "AB440WD"
   },
-  "$extends": ["defaults", "rf.dipswitch_socket"],
+  "$extends": [
+      "defaults",
+      "rf.dipswitch_socket",
+      "pair.socket.elro"
+  ],
   "rf": {
       "signal": "elro_dipswitch"
-  },
-  "$pairOptions": {
-      "rf.choice": {
-          "choices": [
-            {
-              "name": "rf.pair.choice.buttons.copy.default",
-              "view": "rf.imitate",
-              "svg": "assets/remote.svg"
-            },
-            {
-              "name": "rf.pair.choice.buttons.generate.dipswitch",
-              "view": "rf.info",
-              "svg": "assets/dipswitches.svg"
-            }
-          ]
-      },
-      "rf.imitate": {
-          "svg": "assets/remote.svg"
-      },
-      "rf.info": {
-          "svg": "assets/dipswitches.svg"
-      },
-      "rf.dipswitch": {
-          "dipswitchList": [
-              1, 2, 3, 4, 5,
-              "A", "B", "C", "D", "E"
-          ]
-      }
   }
 }

@@ -1,5 +1,8 @@
 {
-    "$extends": ["defaults", "rf.remote"],
+    "$extends": [
+        "defaults",
+        "rf.remote.elro"
+    ],
     "id": "AB440R",
     "name": {
         "en": "AB440R"
