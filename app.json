@@ -1,6 +1,6 @@
 {
   "id": "nl.elro",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "compatibility": ">=1.5.6",
   "sdk": 2,
   "category": [
@@ -218,7 +218,8 @@
               "C",
               "D",
               "E"
-            ]
+            ],
+            "body": "rf.pair.dipswitch.body.extended"
           },
           "navigation": {
             "prev": "rf.info"
@@ -334,7 +335,8 @@
               "C",
               "D",
               "E"
-            ]
+            ],
+            "body": "rf.pair.dipswitch.body.extended"
           },
           "navigation": {
             "prev": "rf.info"

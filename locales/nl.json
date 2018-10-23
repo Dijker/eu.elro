@@ -106,7 +106,8 @@
           "default": "Stel de dipswitches van het apparaat in"
         },
         "body": {
-          "default": "Klik op de bovenstaande dipswitches om ze gelijk aan de dipswitches van het apparaat in te stellen, klik daarna op programmeren."
+          "default": "Klik op de bovenstaande dipswitches om ze gelijk aan de dipswitches van het apparaat in te stellen, klik daarna op programmeren.",
+          "extended": "Klik op de bovenstaande dipswitches om ze gelijk aan de dipswitches van het apparaat in te stellen. Plaats het apparaat na het instellen in het stopcontact, klik daarna op programmeren."
         }
       },
       "done": {

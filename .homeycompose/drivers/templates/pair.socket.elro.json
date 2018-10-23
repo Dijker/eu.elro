@@ -21,6 +21,7 @@
             "svg": "assets/dipswitches.svg"
         },
         "rf.dipswitch": {
+            "body": "rf.pair.dipswitch.body.extended",
             "dipswitchList": [
                 1, 2, 3, 4, 5,
                 "A", "B", "C", "D", "E"

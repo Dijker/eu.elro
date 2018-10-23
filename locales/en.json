@@ -111,7 +111,8 @@
           "default": "Configure your device dipswitches"
         },
         "body": {
-          "default": "Click on the dipswitches above to put them in the same arrangement as those of your device, then click program."
+          "default": "Click on the dipswitches above to put them in the same arrangement as those of your device, then click program.",
+          "extended": "Click on the dipswitches above to put them in the same arrangement as those of your device. After setting the dipswitches, plug the socket in and click program."
         }
       },
       "done": {
